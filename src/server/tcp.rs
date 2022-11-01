@@ -80,7 +80,7 @@ impl TcpKeepaliveConfig {
     }
 
     #[cfg(
-        not(
+        not(all(
             feature = "all",
             target_os = "android",
             target_os = "dragonfly",
@@ -91,11 +91,11 @@ impl TcpKeepaliveConfig {
             target_os = "netbsd",
             target_vendor = "apple",
             windows,
-        )
+        ))
     )]
     #[cfg_attr(
         docsrs,
-        doc(cfg(not(
+        doc(cfg(not(all(
                 feature = "all",
                 target_os = "android",
                 target_os = "dragonfly",
@@ -106,7 +106,7 @@ impl TcpKeepaliveConfig {
                 target_os = "netbsd",
                 target_vendor = "apple",
                 windows,
-            )
+            ))
         ))
     )]
     fn ka_with_interval(ka: TcpKeepalive, _: Duration, _: &mut bool) -> TcpKeepalive {
@@ -148,7 +148,7 @@ impl TcpKeepaliveConfig {
         ka.with_retries(retries)
     }
     #[cfg(
-        not(
+        not(all(
             feature = "all",
             target_os = "android",
             target_os = "dragonfly",
@@ -159,11 +159,11 @@ impl TcpKeepaliveConfig {
             target_os = "netbsd",
             target_vendor = "apple",
             windows,
-        )
+        ))
     )]
     #[cfg_attr(
         docsrs,
-        doc(cfg(not(
+        doc(cfg(not(all(
                 feature = "all",
                 target_os = "android",
                 target_os = "dragonfly",
@@ -174,7 +174,7 @@ impl TcpKeepaliveConfig {
                 target_os = "netbsd",
                 target_vendor = "apple",
                 windows,
-            )
+            ))
         ))
     )]
     fn ka_with_retries(ka: TcpKeepalive, _: u32, _: &mut bool) -> TcpKeepalive {
