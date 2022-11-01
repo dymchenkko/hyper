@@ -43,24 +43,142 @@ impl TcpKeepaliveConfig {
         }
     }
 
-    #[cfg(not(any(target_os = "openbsd", target_os = "redox", target_os = "solaris")))]
+    #[cfg(all(
+        feature = "all",
+        any(
+            target_os = "android",
+            target_os = "dragonfly",
+            target_os = "freebsd",
+            target_os = "fuchsia",
+            target_os = "illumos",
+            target_os = "linux",
+            target_os = "netbsd",
+            target_vendor = "apple",
+            windows,
+        )
+    ))]
+    #[cfg_attr(
+        docsrs,
+        doc(cfg(all(
+            feature = "all",
+            any(
+                target_os = "android",
+                target_os = "dragonfly",
+                target_os = "freebsd",
+                target_os = "fuchsia",
+                target_os = "illumos",
+                target_os = "linux",
+                target_os = "netbsd",
+                target_vendor = "apple",
+                windows,
+            )
+        )))
+    )]
     fn ka_with_interval(ka: TcpKeepalive, interval: Duration, dirty: &mut bool) -> TcpKeepalive {
         *dirty = true;
         ka.with_interval(interval)
     }
 
-    #[cfg(any(target_os = "openbsd", target_os = "redox", target_os = "solaris"))]
+    #[cfg(not(
+        feature = "all",
+        not(
+            target_os = "android",
+            target_os = "dragonfly",
+            target_os = "freebsd",
+            target_os = "fuchsia",
+            target_os = "illumos",
+            target_os = "linux",
+            target_os = "netbsd",
+            target_vendor = "apple",
+            windows,
+        )
+    ))]
+    #[cfg_attr(
+        docsrs,
+        doc(cfg(not(
+            feature = "all",
+            not(
+                target_os = "android",
+                target_os = "dragonfly",
+                target_os = "freebsd",
+                target_os = "fuchsia",
+                target_os = "illumos",
+                target_os = "linux",
+                target_os = "netbsd",
+                target_vendor = "apple",
+                windows,
+            )
+        )))
+    )]
     fn ka_with_interval(ka: TcpKeepalive, _: Duration, _: &mut bool) -> TcpKeepalive {
         ka  // no-op as keepalive interval is not supported on this platform
     }
 
-    #[cfg(not(any(target_os = "openbsd", target_os = "redox", target_os = "solaris", target_os = "windows")))]
+    #[cfg(all(
+        feature = "all",
+        any(
+            doc,
+            target_os = "android",
+            target_os = "dragonfly",
+            target_os = "freebsd",
+            target_os = "fuchsia",
+            target_os = "illumos",
+            target_os = "linux",
+            target_os = "netbsd",
+            target_vendor = "apple",
+        )
+    ))]
+    #[cfg_attr(
+        docsrs,
+        doc(cfg(all(
+            feature = "all",
+            any(
+                target_os = "android",
+                target_os = "dragonfly",
+                target_os = "freebsd",
+                target_os = "fuchsia",
+                target_os = "illumos",
+                target_os = "linux",
+                target_os = "netbsd",
+                target_vendor = "apple",
+            )
+        )))
+    )]
     fn ka_with_retries(ka: TcpKeepalive, retries: u32, dirty: &mut bool) -> TcpKeepalive {
         *dirty = true;
         ka.with_retries(retries)
     }
 
-    #[cfg(any(target_os = "openbsd", target_os = "redox", target_os = "solaris", target_os = "windows"))]
+    #[cfg(not(
+        feature = "all",
+        not(
+            doc,
+            target_os = "android",
+            target_os = "dragonfly",
+            target_os = "freebsd",
+            target_os = "fuchsia",
+            target_os = "illumos",
+            target_os = "linux",
+            target_os = "netbsd",
+            target_vendor = "apple",
+        )
+    ))]
+    #[cfg_attr(
+        docsrs,
+        doc(cfg(not(
+            feature = "all",
+            not(
+                target_os = "android",
+                target_os = "dragonfly",
+                target_os = "freebsd",
+                target_os = "fuchsia",
+                target_os = "illumos",
+                target_os = "linux",
+                target_os = "netbsd",
+                target_vendor = "apple",
+            )
+        )))
+    )]
     fn ka_with_retries(ka: TcpKeepalive, _: u32, _: &mut bool) -> TcpKeepalive {
         ka  // no-op as keepalive retries is not supported on this platform
     }
